@@ -1,0 +1,151 @@
+/* -------------------------
+   Theme variable definitions
+----------------------------*/
+
+/* Warm & Vintage */
+html[data-theme="warmVintage"] {
+  --background: 40 30% 90%;
+  --foreground: 30 15% 20%;
+  --card: 40 30% 80%;
+  --card-foreground: 30 25% 15%;
+  --primary: 25 45% 35%;
+  --primary-foreground: 40 60% 95%;
+  --secondary: 30 35% 80%;
+  --secondary-foreground: 30 20% 20%;
+  --muted: 35 25% 88%;
+  --muted-foreground: 25 10% 40%;
+  --accent: 10 40% 60%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 30 30% 80%;
+  --input: 35 20% 85%;
+  --ring: 25 45% 35%;
+}
+
+/* Cool & Modern */
+html[data-theme="coolModern"] {
+  --background: 210 30% 90%;
+  --foreground: 220 15% 20%;
+  --card: 0 30% 80%;
+  --card-foreground: 220 15% 20%;
+  --primary: 210 60% 45%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 15% 90%;
+  --secondary-foreground: 220 20% 20%;
+  --muted: 220 15% 85%;
+  --muted-foreground: 220 10% 40%;
+  --accent: 180 60% 50%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 210 10% 85%;
+  --input: 220 10% 85%;
+  --ring: 210 60% 45%;
+}
+
+/* Natural & Organic */
+html[data-theme="naturalOrganic"] {
+  --background: 162 30% 90%;
+  --foreground: 100 15% 20%;
+  --card: 160 30% 80%;
+  --card-foreground: 100 10% 20%;
+  --primary: 120 25% 40%;
+  --primary-foreground: 0 0% 98%;
+  --secondary: 60 15% 80%;
+  --secondary-foreground: 120 15% 25%;
+  --muted: 90 10% 85%;
+  --muted-foreground: 100 10% 35%;
+  --accent: 150 20% 45%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 60% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 90 10% 80%;
+  --input: 90 10% 80%;
+  --ring: 120 25% 40%;
+}
+
+/* Playful & Creative */
+html[data-theme="playfulCreative"] {
+  --background: 320 30% 90%;
+  --foreground: 260 20% 20%;
+  --card: 0 30% 80%;
+  --card-foreground: 260 20% 20%;
+  --primary: 280 70% 65%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 190 70% 80%;
+  --secondary-foreground: 220 25% 20%;
+  --muted: 50 70% 85%;
+  --muted-foreground: 260 20% 30%;
+  --accent: 340 80% 70%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 260 15% 85%;
+  --input: 260 15% 85%;
+  --ring: 280 70% 65%;
+}
+
+/* Dark & Elegant */
+html[data-theme="darkElegant"] {
+  --background: 240 30% 10%;
+  --foreground: 45 30% 95%;
+  --card: 240 30% 20%;
+  --card-foreground: 45 20% 90%;
+  --primary: 45 30% 55%;
+  --primary-foreground: 0 0% 10%;
+  --secondary: 240 5% 20%;
+  --secondary-foreground: 45 25% 90%;
+  --muted: 240 5% 25%;
+  --muted-foreground: 45 20% 80%;
+  --accent: 50 50% 60%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 70% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5% 25%;
+  --input: 240 5% 25%;
+  --ring: 45 30% 55%;
+}
+
+/* -------------------------
+   Element styles using variables
+----------------------------*/
+
+/* Root page styles with smooth transitions */
+html {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Inter', sans-serif;
+
+  /* Smooth color transitions on theme change */
+  transition: 
+    background-color 0.5s ease,
+    color 0.5s ease;
+}
+
+/* Inputs using theme variables */
+input {
+  border: 1px solid hsl(var(--border));
+  background-color: hsl(var(--input));
+  color: hsl(var(--foreground));
+
+  transition: 
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px hsl(var(--ring));
+}
+
+/* Optional: style select and buttons too */
+select, button, textarea {
+  transition: 
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+}

@@ -1,0 +1,76 @@
+---
+import ThemeSelector from './ThemeSelector.jsx';
+
+const menuItems = [
+  { name: 'Home', link: "/" },
+  { name: 'Gallery', link: "/collections" },
+  { name: 'About', link: "/about" },
+];
+---
+
+<nav class="w-full bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))] flex items-center justify-between px-6 py-6 relative">
+
+  <!-- Left: Logo -->
+  <a href="/" class="text-xl font-semibold tracking-tight">
+    Wayne Stephens Photography
+  </a>
+
+  <!-- Desktop Menu -->
+  <div class="hidden md:flex items-center gap-8 ml-auto">
+    {menuItems.map(item => (
+      <a href={item.link}>{item.name}</a>
+    ))}
+    <ThemeSelector client:load class="ml-6" />
+  </div>
+
+  <!-- Hamburger Button (mobile) -->
+  <button id="hamburger" class="md:hidden ml-auto text-2xl focus:outline-none">
+    ☰
+  </button>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-menu" class="fixed top-0 right-0 w-48 h-96
+       bg-[hsl(var(--card))] text-[hsl(var(--card-foreground))]
+       shadow-xl z-50 flex flex-col py-6 px-4 space-y-4 text-lg
+       border-l border-[hsl(var(--border))]
+       transform translate-x-full transition-transform duration-300 md:hidden">
+
+    <!-- Close Button -->
+    <button id="close-menu" class="ml-auto mb-4 text-2xl focus:outline-none">×</button>
+
+    {menuItems.map(item => (
+      <a href={item.link} class="py-2 px-1 rounded-md hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))] transition-colors">
+        {item.name}
+      </a>
+    ))}
+
+    <div class="pt-4 border-t border-[hsl(var(--border))]">
+      <ThemeSelector client:load />
+    </div>
+
+  </div>
+
+</nav>
+
+<script is:inline client:load>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const closeMenu = document.getElementById('close-menu');
+
+  // Open drawer
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('translate-x-full');
+  });
+
+  // Close drawer with "X" button
+  closeMenu.addEventListener('click', () => {
+    mobileMenu.classList.add('translate-x-full');
+  });
+
+  // Close drawer when clicking a link
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('translate-x-full');
+    });
+  });
+</script>
