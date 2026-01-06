@@ -52,6 +52,10 @@ const { images } = Astro.props;
 </section>
 
 <!--
+  GLightbox is used to provide modal image viewing for the photo grid.
+  This is intentionally initialised globally so individual gallery
+  components remain static and JS-free.
+
   NOTE: GLightbox is intentionally loaded from a CDN.
   The ES-module build (import GLightbox from 'glightbox') works partially,
   but in this project it caused the navigation buttons to disappear.

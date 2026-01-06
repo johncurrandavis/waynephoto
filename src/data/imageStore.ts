@@ -1,3 +1,17 @@
+/**
+ * imageStore.ts
+ *
+ * This module connects YAML-defined gallery data with Astro's image system.
+ *
+ * Responsibilities:
+ * - Load gallery structure from YAML
+ * - Validate collections
+ * - Filter and sort images
+ * - Resolve image paths to Astro ImageMetadata via import.meta.glob
+ *
+ * This is the single source of truth for "renderable images".
+ */
+
 import path from 'path';
 import {
 	type Collection,
@@ -19,7 +33,10 @@ export class ImageStoreError extends Error {
 }
 
 /**
- * Import all images from /src directory
+ * Eagerly import all image files under /src so Astro can statically process them.
+ *
+ * The keys of this object are absolute paths (starting with /src),
+ * which we later match against paths defined in gallery.yaml.
  */
 const imageModules = import.meta.glob('/src/**/*.{jpg,jpeg,png,gif}', {
 	eager: true,
@@ -107,6 +124,13 @@ function validateGalleryData(gallery: GalleryData) {
 	}
 }
 
+/**
+ * Optional EXIF-based sorting.
+ *
+ * NOTE:
+ * - This currently only works if EXIF captureDate is populated in the YAML.
+ * - EXIF parsing is not implemented yet.
+ */
 function sortImages(images: GalleryImage[], options: GetImagesOptions) {
 	const { sortBy, order } = options;
 	let result: GalleryImage[] = images;
@@ -124,7 +148,15 @@ function sortImages(images: GalleryImage[], options: GetImagesOptions) {
 }
 
 /**
- * Processes gallery images and returns an array of Image objects
+ * Converts YAML image entries into renderable Image objects.
+ *
+ * This step:
+ * - Resolves YAML paths relative to the gallery file
+ * - Looks up the corresponding Astro image module
+ * - Attaches metadata for display and lightbox usage
+ *
+ * Missing images are skipped with a warning rather than crashing the build.
+ *
  * @param {GalleryImage[]} images - Array of images to process
  * @param {string} galleryPath - Path to the collections directory
  * @returns {Image[]} Array of processed images with metadata
