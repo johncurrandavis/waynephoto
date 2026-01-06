@@ -1,3 +1,14 @@
+/**
+ * galleryData.ts
+ *
+ * This module defines the structure of the gallery content and
+ * provides a helper to load it from a YAML file.
+ *
+ * Responsibilities:
+ * - Define the schema for collections and images
+ * - Load and parse gallery.yaml
+ */
+
 import path from 'path';
 import { promises as fs } from 'fs';
 import * as yaml from 'js-yaml';
@@ -22,7 +33,12 @@ export interface Collection {
 }
 
 /**
- * Represents an image entry in the collections YAML file
+ * Represents a single image entry as defined in gallery.yaml.
+ *
+ * This is *content data only*:
+ * - The image path is a string
+ * - Metadata comes from YAML
+ *
  * @property {string} path - Relative path to the image file
  * @property {string} alt - Alt text for accessibility and title
  * @property {string} description - Detailed description of the image
@@ -48,7 +64,13 @@ export interface Meta {
 }
 
 /**
- * Represents the EXIF data of an image
+ * Optional EXIF metadata for an image.
+ *
+ * NOTE:
+ * - EXIF data is not currently extracted automatically.
+ * - These fields exist to support future enhancements
+ *   (e.g. sorting or displaying camera settings).
+ *
  * @property {number} [focalLength] - Focal length of the lens
  * @property {number} [iso] - ISO sensitivity
  * @property {number} [fNumber] - Aperture value
@@ -67,6 +89,12 @@ export interface ImageExif {
 	lensModel?: string;
 }
 
+/**
+ * Loads and parses a gallery YAML file from disk.
+ *
+ * (does not validate image paths or collections —
+ * only returns the raw structured data)
+ */
 export const loadGallery = async (galleryPath: string): Promise<GalleryData> => {
 	const yamlPath = path.resolve(process.cwd(), galleryPath);
 	const content = await fs.readFile(yamlPath, 'utf8');

@@ -55,6 +55,8 @@ const imageModules = import.meta.glob('/src/**/*.{jpg,jpeg,png,gif}', {
 
 const defaultGalleryPath = 'src/gallery/gallery.yaml';
 
+// Built-in collection not required to appear in gallery.yaml.
+// Used for editorial selections like homepage features.
 export const featuredCollectionId = 'featured';
 const builtInCollections = [featuredCollectionId];
 
@@ -73,7 +75,15 @@ interface GetImagesOptions {
 }
 
 /**
- * Retrieves images from a specified gallery path and optionally filters them by a collection name.
+ * Retrieves processed images from a specified gallery path
+ * and optionally filters them by a collection name.
+ *
+ * This function:
+ * 1. Loads gallery data from YAML
+ * 2. Validates collections
+ * 3. Filters by collection (if provided)
+ * 4. Sorts images (optional)
+ * 5. Resolves images to Astro ImageMetadata
  *
  * @param {GetImagesOptions} [options={}] - Configuration options for retrieving the images.
  * @param {string} [options.galleryPath=defaultGalleryPath] - The path to the gallery to load the images from.
